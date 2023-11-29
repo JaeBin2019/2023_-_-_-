@@ -1,12 +1,12 @@
 // https://simplefpga.blogspot.com/2012/07/to-code-stopwatch-in-verilog.html
 
 
-module stopwatch(
+module timer(
     input clock,
     input reset,
     input start,
     input miss,
-    output a, b, c, d, e, f, g, dp, fail,
+    output a, b, c, d, e, f, g, dp, game_fail,
     output [7:0] an
     );
 
@@ -32,12 +32,13 @@ end
 
 assign click = ((ticker == 5000)?1'b1:1'b0); //click to be assigned high every 0.1 second
 
-always @ (posedge clock or posedge reset or posedge miss)
+always @ (posedge clock or posedge reset)
 begin
  if (reset)
   begin
+    click <= 0;
    timer <= 1800000;
-   fail <= 0;
+   game_fail <= 0;
    reg_d0 <= 0;
    reg_d1 <= 0;
    reg_d2 <= 0;
@@ -48,23 +49,25 @@ begin
    reg_d7 <= 0;
   end
   
- else if (click) //increment at every click
-  if (timer > 0) begin
-   // When Miss
-   if (miss == 1) begin
-    timer <= timer - 10;
+ else if (click) 
+  begin
+   if (timer > 0) begin
+    // When Miss
+    if (miss == 1) begin
+      timer <= timer - 10;
+    end
+    timer <= timer - 1;
+    reg_d0 <= timer % 10;
+    reg_d1 <= timer / 10 % 10;
+    reg_d2 <= timer / 100 % 10;
+    reg_d3 <= timer / 1000 % 10;
+    reg_d4 <= timer / 10000 % 10;
+    reg_d5 <= timer / 100000 % 10;
+    reg_d6 <= timer / 1000000 % 10;
+    reg_d7 <= timer / 10000000 % 10;
+   end else begin
+    game_fail <= 1;
    end
-   timer <= timer - 1;
-   reg_d0 <= timer % 10;
-   reg_d1 <= timer / 10 % 10;
-   reg_d2 <= timer / 100 % 10;
-   reg_d3 <= timer / 1000 % 10;
-   reg_d4 <= timer / 10000 % 10;
-   reg_d5 <= timer / 100000 % 10;
-   reg_d6 <= timer / 1000000 % 10;
-   reg_d7 <= timer / 10000000 % 10;
-  end else begin
-    fail <= 1;
   end
 end
 
