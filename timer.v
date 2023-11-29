@@ -7,12 +7,12 @@ module timer(
     input miss,
     output a, b, c, d, e, f, g, dp, game_fail_out,
     output [7:0] an,
-    output [15:0] timer_out
+    output [20:0] timer_out
     );
 
 reg [7:0] reg_d0, reg_d1, reg_d2, reg_d3, reg_d4, reg_d5, reg_d6, reg_d7; //registers that will hold the individual counts
-reg [15:0] ticker; //23 bits needed to count up to 5M bitsa
-reg [15:0] timer;
+reg [20:0] ticker; //23 bits needed to count up to 5M bitsa
+reg [20:0] timer;
 wire click;
 
 //the mod 5M clock to generate a tick ever 0.1 second
@@ -50,13 +50,11 @@ begin
   end
  else if (miss) begin
       timer <= timer - 10 * 1000;
-  end
+ end
   
  else if (click) 
   begin
    if (timer > 0) begin
-    // When Miss
-    
     timer <= timer - 1;
     reg_d0 <= timer % 10;
     reg_d1 <= timer / 10 % 10;
