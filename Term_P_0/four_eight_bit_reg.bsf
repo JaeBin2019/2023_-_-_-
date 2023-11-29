@@ -1,0 +1,114 @@
+/*
+WARNING: Do NOT edit the input and output ports in this file in a text
+editor if you plan to continue editing the block that represents it in
+the Block Editor! File corruption is VERY likely to occur.
+*/
+/*
+Copyright (C) 2020  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and any partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel FPGA IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Intel and sold by Intel or its authorized distributors.  Please
+refer to the applicable agreement for further details, at
+https://fpgasoftware.intel.com/eula.
+*/
+(header "symbol" (version "1.2"))
+(symbol
+	(rect 16 16 240 208)
+	(text "four_eight_bit_reg" (rect 5 0 114 19)(font "Intel Clear" (font_size 8)))
+	(text "inst" (rect 8 171 24 188)(font "Intel Clear" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "numIn[31..0]" (rect 0 0 75 19)(font "Intel Clear" (font_size 8)))
+		(text "numIn[31..0]" (rect 21 27 96 46)(font "Intel Clear" (font_size 8)))
+		(line (pt 0 32)(pt 16 32)(line_width 3))
+	)
+	(port
+		(pt 0 48)
+		(input)
+		(text "ce" (rect 0 0 12 19)(font "Intel Clear" (font_size 8)))
+		(text "ce" (rect 21 43 33 62)(font "Intel Clear" (font_size 8)))
+		(line (pt 0 48)(pt 16 48))
+	)
+	(port
+		(pt 0 64)
+		(input)
+		(text "clk" (rect 0 0 16 19)(font "Intel Clear" (font_size 8)))
+		(text "clk" (rect 21 59 37 78)(font "Intel Clear" (font_size 8)))
+		(line (pt 0 64)(pt 16 64))
+	)
+	(port
+		(pt 0 80)
+		(input)
+		(text "rst" (rect 0 0 15 19)(font "Intel Clear" (font_size 8)))
+		(text "rst" (rect 21 75 36 94)(font "Intel Clear" (font_size 8)))
+		(line (pt 0 80)(pt 16 80))
+	)
+	(port
+		(pt 224 32)
+		(output)
+		(text "numOut[31..28]" (rect 0 0 94 19)(font "Intel Clear" (font_size 8)))
+		(text "numOut[31..28]" (rect 109 27 203 46)(font "Intel Clear" (font_size 8)))
+		(line (pt 224 32)(pt 208 32)(line_width 3))
+	)
+	(port
+		(pt 224 48)
+		(output)
+		(text "numOut[27..24]" (rect 0 0 94 19)(font "Intel Clear" (font_size 8)))
+		(text "numOut[27..24]" (rect 109 43 203 62)(font "Intel Clear" (font_size 8)))
+		(line (pt 224 48)(pt 208 48)(line_width 3))
+	)
+	(port
+		(pt 224 64)
+		(output)
+		(text "numOut[23..20]" (rect 0 0 94 19)(font "Intel Clear" (font_size 8)))
+		(text "numOut[23..20]" (rect 109 59 203 78)(font "Intel Clear" (font_size 8)))
+		(line (pt 224 64)(pt 208 64)(line_width 3))
+	)
+	(port
+		(pt 224 80)
+		(output)
+		(text "numOut[19..16]" (rect 0 0 94 19)(font "Intel Clear" (font_size 8)))
+		(text "numOut[19..16]" (rect 109 75 203 94)(font "Intel Clear" (font_size 8)))
+		(line (pt 224 80)(pt 208 80)(line_width 3))
+	)
+	(port
+		(pt 224 96)
+		(output)
+		(text "numOut[15..12]" (rect 0 0 94 19)(font "Intel Clear" (font_size 8)))
+		(text "numOut[15..12]" (rect 109 91 203 110)(font "Intel Clear" (font_size 8)))
+		(line (pt 224 96)(pt 208 96)(line_width 3))
+	)
+	(port
+		(pt 224 112)
+		(output)
+		(text "numOut[11..8]" (rect 0 0 86 19)(font "Intel Clear" (font_size 8)))
+		(text "numOut[11..8]" (rect 117 107 203 126)(font "Intel Clear" (font_size 8)))
+		(line (pt 224 112)(pt 208 112)(line_width 3))
+	)
+	(port
+		(pt 224 128)
+		(output)
+		(text "numOut[7..4]" (rect 0 0 77 19)(font "Intel Clear" (font_size 8)))
+		(text "numOut[7..4]" (rect 126 123 203 142)(font "Intel Clear" (font_size 8)))
+		(line (pt 224 128)(pt 208 128)(line_width 3))
+	)
+	(port
+		(pt 224 144)
+		(output)
+		(text "numOut[3..0]" (rect 0 0 77 19)(font "Intel Clear" (font_size 8)))
+		(text "numOut[3..0]" (rect 126 139 203 158)(font "Intel Clear" (font_size 8)))
+		(line (pt 224 144)(pt 208 144)(line_width 3))
+	)
+	(drawing
+		(rectangle (rect 16 16 208 176))
+	)
+)
