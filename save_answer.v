@@ -42,57 +42,61 @@ module save_answer(
         end else if (write_enable) begin
             register <= data_in;
         end
-        if (play_music && !is_music_playing) begin
-            auto_index <= 0;
-            is_music_playing <= 1;
-            click_detected <= 0;
-        end
-        if (click && is_music_playing) begin
-            // Output register[3:0] for 1 second
-            case(auto_index)
-            0 : 
-            begin
-                piezo_reg <= register[3:0];
-                auto_index <= auto_index + 1;
-            end
-            1 : 
-            begin
-                piezo_reg <= register[7:3];
-                auto_index <= auto_index + 1;
-            end
-            2 : 
-            begin
-                piezo_reg <= register[11:8];
-                auto_index <= auto_index + 1;
-            end
-            3 : 
-            begin
-                piezo_reg <= register[15:12];
-                auto_index <= auto_index + 1;
-            end
-            4 : 
-            begin
-                piezo_reg <= register[19:16];
-                auto_index <= auto_index + 1;
-            end
-            5 : 
-            begin
-                piezo_reg <= register[23:20];
-                auto_index <= auto_index + 1;
-            end
-            6 : 
-            begin
-                piezo_reg <= register[27:24];
-                auto_index <= auto_index + 1;
-            end
-            7 : 
-            begin
-                piezo_reg <= register[31:28];
+        if (play_music) begin
+            if (!is_music_playing) begin
                 auto_index <= 0;
-                is_music_playing <= 0;
+                is_music_playing <= 1;
+                click_detected <= 0;
             end
-            endcase
-            click_detected <= 1;
+        end
+        if (click) begin
+            if (is_music_playing) begin
+                case(auto_index)
+                0 : 
+                begin
+                    piezo_reg <= register[3:0];
+                    auto_index <= auto_index + 1;
+                end
+                1 : 
+                begin
+                    piezo_reg <= register[7:3];
+                    auto_index <= auto_index + 1;
+                end
+                2 : 
+                begin
+                    piezo_reg <= register[11:8];
+                    auto_index <= auto_index + 1;
+                end
+                3 : 
+                begin
+                    piezo_reg <= register[15:12];
+                    auto_index <= auto_index + 1;
+                end
+                4 : 
+                begin
+                    piezo_reg <= register[19:16];
+                    auto_index <= auto_index + 1;
+                end
+                5 : 
+                begin
+                    piezo_reg <= register[23:20];
+                    auto_index <= auto_index + 1;
+                end
+                6 : 
+                begin
+                    piezo_reg <= register[27:24];
+                    auto_index <= auto_index + 1;
+                end
+                7 : 
+                begin
+                    piezo_reg <= register[31:28];
+                    auto_index <= 0;
+                    is_music_playing <= 0;
+                end
+                endcase
+                
+                click_detected <= 1;
+            end
         end else if (!click) begin
             click_detected <= 0;
         end else begin
