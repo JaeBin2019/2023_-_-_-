@@ -1,7 +1,7 @@
 // https://simplefpga.blogspot.com/2012/07/to-code-stopwatch-in-verilog.html
 
 
-module stopwatch(
+module reference_stopwatch(
     input clock,
     input reset,
     input start,
@@ -72,7 +72,7 @@ end
 
 //The Circuit for Multiplexing - Look at my other post for details on this
 
-localparam N = 18;
+localparam N = ;
 
 reg [N-1:0]count;
 

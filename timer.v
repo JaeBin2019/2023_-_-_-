@@ -6,8 +6,9 @@ module timer(
     input reset,
     input start,
     input miss,
-    output a, b, c, d, e, f, g, dp, game_fail,
-    output [7:0] an
+    output a, b, c, d, e, f, g, dp, game_fail_out,
+    output [7:0] an,
+    output [22:0] timer_out
     );
 
 reg [7:0] reg_d0, reg_d1, reg_d2, reg_d3, reg_d4, reg_d5, reg_d6, reg_d7; //registers that will hold the individual counts
@@ -31,14 +32,14 @@ begin
 end
 
 assign click = ((ticker == 5000)?1'b1:1'b0); //click to be assigned high every 0.1 second
+reg game_fail;
 
 always @ (posedge clock or posedge reset)
 begin
  if (reset)
   begin
-   click <= 0;
-   timer <= 1800000;
    game_fail <= 0;
+   timer <= 1800000;
    reg_d0 <= 0;
    reg_d1 <= 0;
    reg_d2 <= 0;
@@ -71,6 +72,9 @@ begin
   end
 end
 
+assign game_fail_out = game_fail;
+assign timer_out = timer;
+
 
 //The Circuit for Multiplexing - Look at my other post for details on this
 
@@ -91,61 +95,61 @@ reg [7:0]an_temp;
 reg reg_dp;
 always @ (*)
  begin
-  case(count[N-1:N-3])
+  case(count[N-1:N-4])
    
    3'b000 : 
     begin
      sseg = reg_d0;
-     an_temp = 4'b11111110;
+     an_temp = 8'b11111110;
      reg_dp = 1'b0;
     end
    
    3'b001:
     begin
      sseg = reg_d1;
-     an_temp = 4'b11111101;
+     an_temp = 8'b11111101;
      reg_dp = 1'b0;
     end
    
    3'b010:
     begin
      sseg = reg_d2;
-     an_temp = 4'b11111011;
+     an_temp = 8'b11111011;
      reg_dp = 1'b0;
     end
     
    3'b011:
     begin
      sseg = reg_d3;
-     an_temp = 4'b11110111;
+     an_temp = 8'b11110111;
      reg_dp = 1'b0;
     end
    
    3'b100 : 
     begin
      sseg = reg_d4;
-     an_temp = 4'b11101111;
+     an_temp = 8'b11101111;
      reg_dp = 1'b1;
     end
    
    3'b101:
     begin
      sseg = reg_d5;
-     an_temp = 4'b11011111;
+     an_temp = 8'b11011111;
      reg_dp = 1'b0;
     end
    
    3'b110:
     begin
      sseg = reg_d6;
-     an_temp = 4'b10111111;
+     an_temp = 8'b10111111;
      reg_dp = 1'b0;
     end
     
    3'b111:
     begin
      sseg = reg_d7;
-     an_temp = 4'b01111111;
+     an_temp = 8'b01111111;
      reg_dp = 1'b0;
     end
   endcase
