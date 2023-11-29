@@ -10,7 +10,7 @@ module save_answer(
     output reg [3:0] piezo_out
 );
 
-    reg [22:0] ticker; // 23 bits needed to count up to 5M bits
+    reg [15:0] ticker; // 23 bits needed to count up to 5M bits
     wire click;
 
     always @(posedge clk or posedge reset) begin

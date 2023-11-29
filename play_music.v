@@ -7,7 +7,7 @@ module play_music (
     output counter
 );
 
-reg [22:0] ticker; //23 bits needed to count up to 5M bitsa
+reg [15:0] ticker; //23 bits needed to count up to 5M bitsa
 wire click;
 reg is_begin;
 
