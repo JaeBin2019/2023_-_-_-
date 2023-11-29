@@ -4,7 +4,6 @@
 module timer(
     input clock,
     input reset,
-    input start,
     input miss,
     output a, b, c, d, e, f, g, dp, game_fail_out,
     output [7:0] an,
@@ -21,20 +20,20 @@ wire click;
 always @ (posedge clock or posedge reset)
 begin
  if(reset)
-
   ticker <= 0;
 
   // 50MHz * 0.0001 = 5000
  else if(ticker == 5000) //if it reaches the desired max value reset it
   ticker <= 0;
- else if(start) //only start if the input is set high
+
+ else
   ticker <= ticker + 1;
 end
 
 assign click = ((ticker == 5000)?1'b1:1'b0); //click to be assigned high every 0.1 second
 reg game_fail;
 
-always @ (posedge clock or posedge reset)
+always @ (posedge clock or posedge reset or posedge miss)
 begin
  if (reset)
   begin
@@ -54,7 +53,7 @@ begin
   begin
    if (timer > 0) begin
     // When Miss
-    if (miss == 1) begin
+    if (miss) begin
       timer <= timer - 10 * 1000;
     end
     timer <= timer - 1;
@@ -78,7 +77,7 @@ assign timer_out = timer;
 
 //The Circuit for Multiplexing - Look at my other post for details on this
 
-localparam N = 14;
+localparam N = 6;
 
 reg [N-1:0]count; //the 14 bit counter which allows us to multiplex at 1000Hz
 
@@ -95,7 +94,7 @@ reg [7:0]an_temp;
 reg reg_dp;
 always @ (*)
  begin
-  case(count[N-1:N-4])
+  case(count[N-1:N-3])
    
    3'b000 : 
     begin
