@@ -36,7 +36,7 @@ always @ (posedge clock or posedge reset)
 begin
  if (reset)
   begin
-    click <= 0;
+   click <= 0;
    timer <= 1800000;
    game_fail <= 0;
    reg_d0 <= 0;
@@ -54,7 +54,7 @@ begin
    if (timer > 0) begin
     // When Miss
     if (miss == 1) begin
-      timer <= timer - 10;
+      timer <= timer - 10 * 1000;
     end
     timer <= timer - 1;
     reg_d0 <= timer % 10;
