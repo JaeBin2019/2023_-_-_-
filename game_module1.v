@@ -1,4 +1,4 @@
-module game_module(
+module game_module1(
     input wire clk,
     input wire reset,
     input wire [3:0] answer,
@@ -10,6 +10,8 @@ module game_module(
     output [3:0] led_out,
     output miss_out,
     output [2:0] game_mode_out,
+    output [2:0] click_detected_out,
+    output [31:0] register_out,
     output change_num_out
 );
 
@@ -407,6 +409,8 @@ module game_module(
         end
     end
 
+    assign register_out = register;
+    assign click_detected_out = click_detected;
     assign led_out = led_reg;
     assign change_num_out = change_num;
     assign game_mode_out = game_mode;
