@@ -47,6 +47,7 @@ module game_module1(
     reg [3:0] answer_reg;
     reg [3:0] led_reg;
     reg [6:0] problem_count;
+    reg start_flag;
 
     /*
         auto index 와 max index 가 같으면, 음악 재생을 멈추고 index를 0으로 바꾼다
@@ -66,12 +67,14 @@ module game_module1(
             miss_reg <= 0;
             change_num <= 0;
             problem_count <= 0;
+            start_flag <= 0;
 
             // 정답 index 는 0 ~ max_index 까지 반복, max_index 초기값은 2로 설정
             answer_index <= 0;
             max_index <= 2;
         end else if (write_enable) begin
             register <= data_in;
+            start_flag <= 1;
 
         end else if (answer_enable) begin
             answer_reg <= answer;
@@ -81,7 +84,7 @@ module game_module1(
 
         // mode가 0이고, register 값이 비어있지 않고, flag 가 true 면 노래를 시작한다
         // is_music_playing 을 1으로 바꿔준다
-        end else if (play_miss) begin
+        end else if (game_mode == 0 && start_flag == 1 && play_miss) begin
             auto_index <= 0;
             click_detected <= 3;
             is_music_playing <= 1;
@@ -171,8 +174,6 @@ module game_module1(
                 led_reg <= 0;
             end
 
-            
-            
         // miss 와 change 신호는 1 clk 동안만 동작하도록 한다.
         end else if (play_miss == 1 || change_num == 1) begin
             play_miss <= 0;
