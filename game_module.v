@@ -4,12 +4,13 @@ module game_module(
     input wire [3:0] answer,
     input wire [31:0] data_in,
     input wire write_enable,
+    input wire answer_enable,
     output [3:0] data_out,
     output [3:0] piezo_out,
     output [3:0] led_out,
     output miss_out,
     output [2:0] game_mode_out,
-    output change_num_out;
+    output change_num_out
 );
 
     reg [20:0] ticker; // 23 bits needed to count up to 5M bits
@@ -51,7 +52,7 @@ module game_module(
         }
     */
 
-    always @(posedge clk or posedge reset or posedge answer) begin
+    always @(posedge clk or posedge reset posedge write_enable or posedge answer_enable) begin
         if (reset) begin
             register <= 0;
             click_detected <= 0;
@@ -67,13 +68,11 @@ module game_module(
             max_index <= 2;
         end else if (write_enable) begin
             register <= data_in;
-        end else if (problem_count == 30) begin
-            
-        end
 
-        end else if (answer) begin
+        end else if (answer_enable) begin
             answer_reg <= answer;
-        end else if (!answer && game_mode == 0) begin
+
+        end else if (!answer_enable && game_mode == 0) begin
             led_reg <= 0;
         // mode가 0이고, register 값이 비어있지 않고, flag 가 true 면 노래를 시작한다
         // is_music_playing 을 1으로 바꿔준다
@@ -393,7 +392,7 @@ module game_module(
                     end else if (answer_index == max_index) begin
                         answer_index <= 0;
                         max_index <= 0;
-                        game_mode == 1;
+                        game_mode <= 1;
                         click_detected <= 0;
                     end
                 end else if (game_mode == 1) begin
