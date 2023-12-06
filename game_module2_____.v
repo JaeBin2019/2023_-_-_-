@@ -10,6 +10,7 @@ module game_module(
     output [3:0] led_out,
     output miss_out,
     output [2:0] game_mode_out,
+    output click_out,
     output change_num_out
 );
 
@@ -407,6 +408,7 @@ module game_module(
         end
     end
 
+    assign click_out = click;
     assign led_out = led_reg;
     assign change_num_out = change_num;
     assign game_mode_out = game_mode;
