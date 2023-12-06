@@ -1,4 +1,4 @@
-module game_module1(
+module game_module(
     input wire clk,
     input wire reset,
     input wire [3:0] answer,
@@ -84,7 +84,7 @@ module game_module1(
 
         // mode가 0이고, register 값이 비어있지 않고, flag 가 true 면 노래를 시작한다
         // is_music_playing 을 1으로 바꿔준다
-        end else if (game_mode == 0 && start_flag == 1 && play_miss) begin
+        end else if ((game_mode == 0) & start_flag & play_miss) begin
             auto_index <= 0;
             click_detected <= 3;
             is_music_playing <= 1;
@@ -93,7 +93,7 @@ module game_module1(
         //click_detected 가 1초마다 1씩 증가한다. 3이 되면 노래를 재생한다.
         // 0 이면 노래 재생을 멈추고, 1 이면 해당하는 register 의 음정을 재생한다
         // 노래 자동 재생이 max_index 까지 도달하면, is_music_playing 을 0으로 바꾸어 재생을 멈춘다.
-        else if (game_mode == 0 && click_detected == 3 && is_music_playing) begin
+        else if ((game_mode == 0) & (click_detected == 3) & is_music_playing) begin
             
             case(auto_index)
             0 : 
@@ -167,7 +167,7 @@ module game_module1(
 
            click_detected <= 0;
         // click_detected 를 1씩 증가시킨다.
-        end else if (game_mode == 0 && click && is_music_playing) begin
+        end else if ((game_mode == 0) && click && is_music_playing) begin
             click_detected <= click_detected + 1;
             if (click_detected == 2) begin
                 piezo_reg <= 0;
@@ -175,11 +175,11 @@ module game_module1(
             end
 
         // miss 와 change 신호는 1 clk 동안만 동작하도록 한다.
-        end else if (play_miss == 1 || change_num == 1) begin
+        end else if ((play_miss == 1) || (change_num == 1)) begin
             play_miss <= 0;
             change_num <= 0;
 
-        end else if (game_mode == 1 && click) begin
+        end else if ((game_mode == 1) && click) begin
            click_detected <= click_detected + 1;
 
         end else if (game_mode == 1) begin
