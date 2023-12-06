@@ -12,7 +12,8 @@ module game_module1(
     output [2:0] game_mode_out,
     output [2:0] click_detected_out,
     output [31:0] register_out,
-    output play_music
+    output play_music,
+    output play_miss_out,
     output change_num_out
 );
 
@@ -77,10 +78,10 @@ module game_module1(
 
         // end else if (!answer_enable && game_mode == 0) begin
         //     led_reg <= 0;
-        
+
         // mode가 0이고, register 값이 비어있지 않고, flag 가 true 면 노래를 시작한다
         // is_music_playing 을 1으로 바꿔준다
-        end else if (game_mode == 0 && register != 0 && play_miss) begin
+        end else if (play_miss) begin
             auto_index <= 0;
             click_detected <= 3;
             is_music_playing <= 1;
@@ -411,6 +412,7 @@ module game_module1(
         end
     end
 
+    assign play_miss_out = play_miss;
     assign register_out = register;
     assign click_detected_out = click_detected;
     assign led_out = led_reg;
