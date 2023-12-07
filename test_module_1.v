@@ -18,7 +18,9 @@ module game_module(
 	output [3:0] auto_index_out,
 	output [3:0] last_index_out,
     output game_end,
-    output [3:0] keypad_reg_out
+    output [3:0] keypad_reg_out,
+    output [3:0] answer_reg_out,
+    output keypad_enable_flag_out
 );
 
     reg [20:0] ticker; // 23 bits needed to count up to 5M bits
@@ -81,6 +83,7 @@ module game_module(
             game_start_flag <= 0;
             game_end_reg <= 0;
             keypad_down_flag <= 0;
+            keypad_reg <= 0;
 
             piezo_reg <= 0;
             led_reg <= 0;
@@ -262,9 +265,10 @@ module game_module(
                 end
             end
         end
-
     end
 
+    assign keypad_enable_flag_out = keypad_enable_flag;
+    assign answer_reg_out = answer_reg;
     assign keypad_reg_out = keypad_reg;
     assign game_end = game_end_reg;
     assign music_replay_out = music_replay;
