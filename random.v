@@ -29,9 +29,11 @@ module random #(parameter a=1103515245, c=12345) (
         rand <= next_rand;
         if (change_answer) begin
             change_answer_flag <= 1;
+
         end else if (change_answer_flag) begin
             change_answer_flag <= 0;
             write_enable_reg <= 1;
+            
         end else if (write_enable_reg) begin
             write_enable_reg <= 0;
         end

@@ -176,7 +176,6 @@ module game_module(
             // click_counter 는 3 0 1 2 를 반복하며, 
             // 3일 때는 노래 재생을, 1 일때는 재생을 멈추어 노래가 일정하게 재생되도록 한다.
             end else if (click && is_music_playing) begin
-                click_counter <= click_counter + 1;
                 if (click_counter == 1) begin
                     piezo_reg <= 0;
                     led_reg <= 0;
@@ -184,7 +183,8 @@ module game_module(
                         is_music_playing <= 0;
                         stop_music_flag <= 0;
                     end
-                end
+                click_counter <= click_counter + 1;
+            end
 
             // keypad 값이 입력되었다면, answer 값과 keypad 값을 비교한다
             // 같으면 다음 index를, 다르다면 miss 를 출력하고 처음부터 다시 노래를 재생한다

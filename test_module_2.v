@@ -72,7 +72,6 @@ module game_module(
             current_count <= 0;
             problem_count <= 30;
             answer_saved_flag <= 0;
-			keypad_enable_flag <= 0;
             game_start_flag <= 0;
             game_end_reg <= 0;
             limit_index <= 7;
@@ -122,7 +121,6 @@ module game_module(
                 problem_index <= problem_index + 1;
                 current_count <= current_count + 1;
 
-            // keypad 입력이 들어오면, click_counter 와 keypad_flag 를 초기화
             end else begin
 
                 case(problem_index)
@@ -164,6 +162,7 @@ module game_module(
                 // 현재 두더지 위치 출력
                 led_reg <= answer_reg;
 
+                // keypad 입력이 들어오면, click_counter 와 keypad_flag 를 초기화
                 if (keypad_enable_flag) begin
                     keypad_enable_flag <= 0;
                     click_counter <= 0;
