@@ -5,6 +5,7 @@ module game_module(
     input wire [31:0] data_in,
     input wire write_enable,
     input wire answer_enable,
+    input wire my_turn,
     output [3:0] data_out,
     output [3:0] piezo_out,
     output [3:0] led_out,
@@ -58,6 +59,7 @@ module game_module(
     */
 
     always @(posedge clk or posedge reset or posedge write_enable or posedge answer_enable) begin
+        if (my_turn) begin
         if (reset) begin
             register <= 0;
             click_detected <= 0;
@@ -169,7 +171,7 @@ module game_module(
         // click_detected 를 1씩 증가시킨다.
         end else if ((game_mode == 0) && click && is_music_playing) begin
             click_detected <= click_detected + 1;
-            if (click_detected == 2) begin
+            if (click_detected == 1) begin
                 piezo_reg <= 0;
                 led_reg <= 0;
             end
