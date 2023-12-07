@@ -1,7 +1,7 @@
 module game_module(
     input wire clk,
     input wire reset,
-    input wire [3:0] keypad_reg,
+    input wire [3:0] keypad_input,
     input wire [31:0] data_in,
     input wire write_enable,
     input wire keypad_enable,
@@ -100,7 +100,7 @@ module game_module(
         // 만약 노래가 재생 중이라면, 위의 if 문에 걸려 keypad 가 동작하지 않게 된다
         end else if (keypad_enable) begin
             if (!is_music_playing) begin
-                keypad_reg <= keypad_reg;
+                keypad_reg <= keypad_input;
                 keypad_enable_flag <= 1;
                 keypad_down_flag <= 1;
                 led_reg <= keypad_reg;
