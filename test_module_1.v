@@ -1,7 +1,7 @@
 module game_module(
     input wire clk,
     input wire reset,
-    input wire [3:0] keypad_data,
+    input wire [3:0] keypad_reg,
     input wire [31:0] data_in,
     input wire write_enable,
     input wire keypad_enable,
@@ -100,7 +100,7 @@ module game_module(
         // 만약 노래가 재생 중이라면, 위의 if 문에 걸려 keypad 가 동작하지 않게 된다
         end else if (keypad_enable) begin
             if (!is_music_playing) begin
-                keypad_reg <= keypad_data;
+                keypad_reg <= keypad_reg;
                 keypad_enable_flag <= 1;
                 keypad_down_flag <= 1;
                 led_reg <= keypad_reg;
@@ -242,7 +242,7 @@ module game_module(
 
                 // 마지막 index의 정답을 맞추었다면, last_index 값을 1 증가시키고
                 // 음정을 하나 추가하여 노래를 다시 재생한다
-                end else if ((keypad_data == answer_reg) && (answer_index == last_index)) begin
+                end else if ((keypad_reg == answer_reg) && (answer_index == last_index)) begin
 
                     // 게임 종료 max_index 인 7에 도달했다면, start flag 를 0으로 바꾸고,
                     // 게임 종료 신호를 보낸다
@@ -257,7 +257,7 @@ module game_module(
 
                 // 정답이 맞다면, answer_index 를 1 증가시키고 계속해서
                 // 다음 음정을 맞추는 지 체크한다
-                end else if (keypad_data == answer_reg) begin
+                end else if (keypad_reg == answer_reg) begin
                     answer_index <= answer_index + 1;
                 end
             end
