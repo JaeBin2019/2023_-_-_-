@@ -47,12 +47,12 @@ module game_module(
     reg music_replay;
     reg miss_reg;
     reg [3:0] keypad_reg;
-	reg [3:0] answer_reg;
+    reg [3:0] answer_reg;
     reg [3:0] led_reg;
     reg [6:0] problem_count;
     reg start_flag;
-	reg stop_music_flag;
-	reg keypad_enable_flag;
+    reg stop_music_flag;
+    reg keypad_enable_flag;
     reg game_start_flag;
     reg game_end_reg;
 
@@ -89,6 +89,16 @@ module game_module(
         
         end else if (game_start) begin
             game_start_flag <= 1;
+
+        // keypad 에 값이 들어오면, keypad 값을 읽어 처리할 수 있도록 한다
+        // 만약 노래가 재생 중이라면, 위의 if 문에 걸려 keypad 가 동작하지 않게 된다
+        end else if (keypad_enable) begin
+            if (!is_music_playing) begin
+                keypad_reg <= keypad_data;
+                keypad_enable_flag <= 1;
+                led_reg <= keypad_reg;
+                piezo_reg <= keypad_reg;
+            end
 
         end else begin
             if (game_start_flag) begin
@@ -171,13 +181,7 @@ module game_module(
                     end
                         
                     
-                // keypad 에 값이 들어오면, keypad 값을 읽어 처리할 수 있도록 한다
-                // 만약 노래가 재생 중이라면, 위의 if 문에 걸려 keypad 가 동작하지 않게 된다
-                end else if (keypad_enable) begin
-                    keypad_reg <= keypad_data;
-                    keypad_enable_flag <= 1;
-                    led_reg <= keypad_reg;
-                    piezo_reg <= keypad_reg;
+                
 
                 // keypad 값이 입력되었다면, answer 값과 keypad 값을 비교하여
                 // miss 라면 index 값을 그대로, 답과 같은 값을 입력했다면,
