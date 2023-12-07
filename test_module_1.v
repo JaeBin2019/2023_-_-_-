@@ -26,7 +26,7 @@ module game_module(
     always @(posedge clk or posedge reset) begin
         if (reset) begin
             ticker <= 0;
-        end else if (ticker == 2) begin
+        end else if (ticker == 1) begin
             ticker <= 0;
         end else begin
             ticker <= ticker + 1;
@@ -34,7 +34,7 @@ module game_module(
     end
 
 
-    assign click = (ticker == 2) ? 1'b1 : 1'b0; 
+    assign click = (ticker == 1) ? 1'b1 : 1'b0; 
     reg [31:0] register;
     reg [3:0] last_index;    // 각 음정의 last index : 2 ~ 7
     reg [3:0] max_index;    // 노래 재생 시 마지막 index : 7
@@ -55,6 +55,7 @@ module game_module(
     reg keypad_enable_flag;
     reg game_start_flag;
     reg game_end_reg;
+    reg keypad_down_flag;
 
     /*
         auto index 와 max index 가 같으면, 음악 재생을 멈추고 index를 0으로 바꾼다
@@ -78,6 +79,7 @@ module game_module(
 			keypad_enable_flag <= 0;
             game_start_flag <= 0;
             game_end_reg <= 0;
+            keypad_down_flag <= 0;
 
             piezo_reg <= 0;
             led_reg <= 0;
@@ -99,10 +101,15 @@ module game_module(
             if (!is_music_playing) begin
                 keypad_reg <= keypad_data;
                 keypad_enable_flag <= 1;
+                keypad_down_flag <= 1;
                 led_reg <= keypad_reg;
                 piezo_reg <= keypad_reg;
             end
 
+        // keypad button 을 땐 후에 노래가 멈추도록 한다
+        end else if (keypad_down_flag) begin
+            led_reg <= 0;
+            piezo_reg <= 0;
 
         // game start 신호와 register 에 정답이 저장된 이후에 동작
         end else if (game_start_flag && answer_saved_flag) begin
