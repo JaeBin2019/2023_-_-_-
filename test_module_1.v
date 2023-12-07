@@ -17,7 +17,8 @@ module game_module(
     output music_replay_out,
 	output [3:0] auto_index_out,
 	output [3:0] last_index_out,
-    output game_end
+    output game_end,
+    output [3:0] keypad_reg_out
 );
 
     reg [20:0] ticker; // 23 bits needed to count up to 5M bits
@@ -183,6 +184,8 @@ module game_module(
             // click_counter 는 3 0 1 2 를 반복하며, 
             // 3일 때는 노래 재생을, 1 일때는 재생을 멈추어 노래가 일정하게 재생되도록 한다.
             end else if (click && is_music_playing) begin
+                click_counter <= click_counter + 1;
+
                 if (click_counter == 1) begin
                     piezo_reg <= 0;
                     led_reg <= 0;
@@ -190,7 +193,6 @@ module game_module(
                         is_music_playing <= 0;
                         stop_music_flag <= 0;
                     end
-                click_counter <= click_counter + 1;
             end
 
             // keypad 값이 입력되었다면, answer 값과 keypad 값을 비교한다
@@ -263,6 +265,7 @@ module game_module(
 
     end
 
+    assign keypad_reg_out = keypad_reg;
     assign game_end = game_end_reg;
     assign music_replay_out = music_replay;
     assign register_out = register;
