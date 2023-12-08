@@ -20,7 +20,8 @@ module game_module(
     output game_end,
     output [3:0] keypad_reg_out,
     output [3:0] answer_reg_out,
-    output keypad_enable_flag_out
+    output keypad_enable_flag_out,
+    output answer_flag_out
 );
 
     reg [20:0] ticker; // 23 bits needed to count up to 5M bits
@@ -84,6 +85,7 @@ module game_module(
             game_end_reg <= 0;
             keypad_down_flag <= 0;
             keypad_reg <= 0;
+            answer_flag <= 0;
 
             piezo_reg <= 0;
             led_reg <= 0;
@@ -112,6 +114,7 @@ module game_module(
 
         // keypad button 을 땐 후에 노래가 멈추도록 한다
         end else if (keypad_down_flag) begin
+            keypad_down_flag <= 0;
             led_reg <= 0;
             piezo_reg <= 0;
 
@@ -198,10 +201,10 @@ module game_module(
                     end
             end
 
-            // keypad 값이 입력되었다면, answer 값과 keypad 값을 비교한다
-            // 같으면 다음 index를, 다르다면 miss 를 출력하고 처음부터 다시 노래를 재생한다
+            // keypad 값이 입력되었다면, answer 에 해당 index register 값을 넣는다.
             end else if (keypad_enable_flag) begin
                 keypad_enable_flag <= 0;
+                answer_flag <= 1;
 
                 case(answer_index)
                 0 : 
@@ -237,9 +240,13 @@ module game_module(
                     answer_reg <= register[31:28];
                 end
                 endcase
+            end else if (answer_flag) begin
+                answer_flag <= 0;
 
                 // 정답과 틀리면, index 를 0으로 되돌리고 노래 재생을 시작한다
                 if (keypad_reg != answer_reg) begin
+                    led_reg <= 0;
+                    piezo_reg <= 0;
                     answer_index <= 0;
                     music_replay <= 1;
 
@@ -267,6 +274,7 @@ module game_module(
         end
     end
 
+    assign answer_flag_out = answer_flag_out;
     assign keypad_enable_flag_out = keypad_enable_flag;
     assign answer_reg_out = answer_reg;
     assign keypad_reg_out = keypad_reg;
