@@ -60,6 +60,7 @@ module game_module(
     reg game_start_flag;
     reg game_end_reg;
     reg keypad_down_flag;
+    reg answer_flag;
 
     /*
         auto index 와 max index 가 같으면, 음악 재생을 멈추고 index를 0으로 바꾼다
@@ -274,7 +275,7 @@ module game_module(
         end
     end
 
-    assign answer_flag_out = answer_flag_out;
+    assign answer_flag_out = answer_flag;
     assign keypad_enable_flag_out = keypad_enable_flag;
     assign answer_reg_out = answer_reg;
     assign keypad_reg_out = keypad_reg;
