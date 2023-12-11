@@ -92,7 +92,8 @@ module game_module(
             led_reg <= 0;
 
             // 정답 index 는 0 ~ last_index 까지 반복, last_index 초기값은 2로 설정
-            answer_index <= 0;
+            // 노래를 거꾸로 맞추어야 하기 때문에, index 가 last_index 부터 0까지 감소한다
+            answer_index <= 2;
             last_index <= 2;
             max_index <= 7;
         end else if (write_enable) begin
@@ -139,42 +140,34 @@ module game_module(
                 0 : 
                 begin
                     piezo_reg <= register[3:0];
-                    led_reg <= register[3:0];
                 end
                 1 : 
                 begin
                     piezo_reg <= register[7:4];
-                    led_reg <= register[7:4];
                 end
                 2 : 
                 begin
                     piezo_reg <= register[11:8];
-                    led_reg <= register[11:8];
                 end
                 3 : 
                 begin
                     piezo_reg <= register[15:12];
-                    led_reg <= register[15:12];
                 end
                 4 : 
                 begin
                     piezo_reg <= register[19:16];
-                    led_reg <= register[19:16];
                 end
                 5 : 
                 begin
                     piezo_reg <= register[23:20];
-                    led_reg <= register[23:20];
                 end
                 6 : 
                 begin
                     piezo_reg <= register[27:24];
-                    led_reg <= register[27:24];
                 end
                 7 : 
                 begin
                     piezo_reg <= register[31:28];
-                    led_reg <= register[31:28];
                 end
                 endcase
                 click_counter <= 0;
@@ -244,16 +237,16 @@ module game_module(
             end else if (answer_flag) begin
                 answer_flag <= 0;
 
-                // 정답과 틀리면, index 를 0으로 되돌리고 노래 재생을 시작한다
+                // 정답과 틀리면, index 를 last_index 로 되돌리고 노래 재생을 시작한다
                 if (keypad_reg != answer_reg) begin
                     led_reg <= 0;
                     piezo_reg <= 0;
-                    answer_index <= 0;
+                    answer_index <= last_index;
                     music_replay <= 1;
 
                 // 마지막 index의 정답을 맞추었다면, last_index 값을 1 증가시키고
                 // 음정을 하나 추가하여 노래를 다시 재생한다
-                end else if ((keypad_reg == answer_reg) && (answer_index == last_index)) begin
+                end else if ((keypad_reg == answer_reg) && (answer_index == 0)) begin
 
                     // 게임 종료 max_index 인 7에 도달했다면, start flag 를 0으로 바꾸고,
                     // 게임 종료 신호를 보낸다
@@ -262,14 +255,14 @@ module game_module(
                         game_end_reg <= 1;
                     end
 
-                    answer_index <= 0;
+                    answer_index <= last_index + 1;
                     last_index <= last_index + 1;
                     music_replay <= 1;
 
-                // 정답이 맞다면, answer_index 를 1 증가시키고 계속해서
+                // 정답이 맞다면, answer_index 를 1 감소시키고 계속해서
                 // 다음 음정을 맞추는 지 체크한다
                 end else if (keypad_reg == answer_reg) begin
-                    answer_index <= answer_index + 1;
+                    answer_index <= answer_index - 1;
                 end
             end
         end
