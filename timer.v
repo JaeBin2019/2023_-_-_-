@@ -52,25 +52,26 @@ begin
    reg_d7 <= 0;
   end
  else if (miss) begin
-      timer_flage <= 1;
+      timer_flag <= 1;
  end
   
  else if (click) 
   begin
    if (timer > 0) begin
-    if (timer_flag == 1) begin
+    if (timer_flag) begin
       timer <= timer - 10;
       timer_flag <= 0;
+    end else begin
+      timer <= timer - 1;
+      reg_d0 <= timer % 10;
+      reg_d1 <= timer / 10 % 10;
+      reg_d2 <= timer / 100 % 10;
+      reg_d3 <= timer / 1000 % 10;
+      reg_d4 <= timer / 10000 % 10;
+      reg_d5 <= timer / 100000 % 10;
+      reg_d6 <= timer / 1000000 % 10;
+      reg_d7 <= timer / 10000000 % 10;
     end
-    timer <= timer - 1;
-    reg_d0 <= timer % 10;
-    reg_d1 <= timer / 10 % 10;
-    reg_d2 <= timer / 100 % 10;
-    reg_d3 <= timer / 1000 % 10;
-    reg_d4 <= timer / 10000 % 10;
-    reg_d5 <= timer / 100000 % 10;
-    reg_d6 <= timer / 1000000 % 10;
-    reg_d7 <= timer / 10000000 % 10;
    end else begin
     timer <= 0;
     game_over_flag <= 1;
