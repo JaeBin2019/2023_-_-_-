@@ -14,13 +14,24 @@ module random (
     reg [31:0] next_rand;
     reg change_answer_flag = 0;
     reg write_enable_reg = 0;
-    reg [31:0] tick = 1;
+    reg [20:0] ticker; // 23 bits needed to count up to 5M bits
+    wire click;
+
+    always @(posedge clk) begin
+        if (ticker == 1) begin
+            ticker <= 0;
+        end else begin
+            ticker <= ticker + 1;
+        end
+    end
+
+
+    assign click = (ticker == 1) ? 1'b1 : 1'b0; 
     
     always @ (posedge clk or posedge change_answer) begin
-        tick <= tick + 1;
-        next_rand = (tick % 8 + 1) + ((7 * tick) % 8 + 1) * 16 + ((13 * tick) % 8 + 1) * 16 * 16 + ((23 * tick) % 8 + 1) * 16 * 16 * 16
-            + ((17 * tick) % 8 + 1) * 16 * 16 * 16 * 16 + ((31 * tick) % 8 + 1) * 16 * 16 * 16 * 16 * 16 + ((37 * tick) % 8 + 1) * 16 * 16 * 16 * 16 * 16 * 16
-            + ((43 * tick) % 8 + 1) * 16 * 16 * 16 * 16 * 16 * 16 * 16;
+        next_rand = (click % 8 + 1) + ((7 * click) % 8 + 1) * 16 + ((13 * click) % 8 + 1) * 16 * 16 + ((23 * click) % 8 + 1) * 16 * 16 * 16
+            + ((17 * click) % 8 + 1) * 16 * 16 * 16 * 16 + ((31 * click) % 8 + 1) * 16 * 16 * 16 * 16 * 16 + ((37 * click) % 8 + 1) * 16 * 16 * 16 * 16 * 16 * 16
+            + ((43 * click) % 8 + 1) * 16 * 16 * 16 * 16 * 16 * 16 * 16;
         rand = next_rand;
         if (change_answer) begin
             change_answer_flag <= 1;
