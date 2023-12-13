@@ -93,9 +93,9 @@ module game_module_3(
 
             // 정답 index 는 0 ~ last_index 까지 반복, last_index 초기값은 2로 설정
             // 노래를 거꾸로 맞추어야 하기 때문에, index 가 last_index 부터 0까지 감소한다
-            answer_index <= 2;
-            last_index <= 2;
-            max_index <= 7;
+            answer_index <= 0;
+            last_index <= 0;
+            max_index <= 1;
         end else if (write_enable) begin
             register <= data_in;
             answer_saved_flag <= 1;
@@ -139,35 +139,43 @@ module game_module_3(
                 case(auto_index)
                 0 : 
                 begin
-                    piezo_reg <= register[3:0];
+                    piezo_reg <= register[2:0];
+                    led_reg <= register[2:0];
                 end
                 1 : 
                 begin
-                    piezo_reg <= register[7:4];
+                    piezo_reg <= register[6:4];
+                    led_reg <= register[6:4];
                 end
                 2 : 
                 begin
-                    piezo_reg <= register[11:8];
+                    piezo_reg <= register[10:8];
+                    led_reg <= register[10:8];
                 end
                 3 : 
                 begin
-                    piezo_reg <= register[15:12];
+                    piezo_reg <= register[14:12];
+                    led_reg <= register[14:12];
                 end
                 4 : 
                 begin
-                    piezo_reg <= register[19:16];
+                    piezo_reg <= register[18:16];
+                    led_reg <= register[18:16];
                 end
                 5 : 
                 begin
-                    piezo_reg <= register[23:20];
+                    piezo_reg <= register[22:20];
+                    led_reg <= register[22:20];
                 end
                 6 : 
                 begin
-                    piezo_reg <= register[27:24];
+                    piezo_reg <= register[26:24];
+                    led_reg <= register[26:24];
                 end
                 7 : 
                 begin
-                    piezo_reg <= register[31:28];
+                    piezo_reg <= register[30:28];
+                    led_reg <= register[30:28];
                 end
                 endcase
                 click_counter <= 0;
@@ -203,35 +211,35 @@ module game_module_3(
                 case(answer_index)
                 0 : 
                 begin
-                    answer_reg <= register[3:0];
+                    answer_reg <= register[2:0];
                 end
                 1 : 
                 begin
-                    answer_reg <= register[7:4];
+                    answer_reg <= register[6:4];
                 end
                 2 : 
                 begin
-                    answer_reg <= register[11:8];
+                    answer_reg <= register[10:8];
                 end
                 3 : 
                 begin
-                    answer_reg <= register[15:12];
+                    answer_reg <= register[14:12];
                 end
                 4 : 
                 begin
-                    answer_reg <= register[19:16];
+                    answer_reg <= register[18:16];
                 end
                 5 : 
                 begin
-                    answer_reg <= register[23:20];
+                    answer_reg <= register[22:20];
                 end
                 6 : 
                 begin
-                    answer_reg <= register[27:24];
+                    answer_reg <= register[26:24];
                 end
                 7 : 
                 begin
-                    answer_reg <= register[31:28];
+                    answer_reg <= register[30:28];
                 end
                 endcase
             end else if (answer_flag) begin
