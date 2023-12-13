@@ -1,4 +1,4 @@
-module game_module_1(
+module game_module_3(
     input wire clk,
     input wire reset,
     input wire [3:0] keypad_input,
@@ -33,12 +33,12 @@ module game_module_1(
         end else if (ticker == 500000) begin
             ticker <= 0;
         end else begin
-            ticker <= ticker + 1;
+            ticker <= ticker + 500000;
         end
     end
 
 
-    assign click = (ticker == 500000) ? 1'b1 : 1'b0; 
+    assign click = (ticker == 1) ? 1'b1 : 1'b0; 
     reg [31:0] register;
     reg [3:0] last_index;    // 각 음정의 last index : 2 ~ 7
     reg [3:0] max_index;    // 노래 재생 시 마지막 index : 7
@@ -92,7 +92,8 @@ module game_module_1(
             led_reg <= 0;
 
             // 정답 index 는 0 ~ last_index 까지 반복, last_index 초기값은 2로 설정
-            answer_index <= 0;
+            // 노래를 거꾸로 맞추어야 하기 때문에, index 가 last_index 부터 0까지 감소한다
+            answer_index <= 2;
             last_index <= 2;
             max_index <= 7;
         end else if (write_enable) begin
@@ -139,42 +140,34 @@ module game_module_1(
                 0 : 
                 begin
                     piezo_reg <= register[2:0];
-                    led_reg <= register[2:0];
                 end
                 1 : 
                 begin
                     piezo_reg <= register[6:4];
-                    led_reg <= register[6:4];
                 end
                 2 : 
                 begin
                     piezo_reg <= register[10:8];
-                    led_reg <= register[10:8];
                 end
                 3 : 
                 begin
                     piezo_reg <= register[14:12];
-                    led_reg <= register[14:12];
                 end
                 4 : 
                 begin
                     piezo_reg <= register[18:16];
-                    led_reg <= register[18:16];
                 end
                 5 : 
                 begin
                     piezo_reg <= register[22:20];
-                    led_reg <= register[22:20];
                 end
                 6 : 
                 begin
                     piezo_reg <= register[26:24];
-                    led_reg <= register[26:24];
                 end
                 7 : 
                 begin
                     piezo_reg <= register[30:28];
-                    led_reg <= register[30:28];
                 end
                 endcase
                 click_counter <= 0;
@@ -244,32 +237,32 @@ module game_module_1(
             end else if (answer_flag) begin
                 answer_flag <= 0;
 
-                // 정답과 틀리면, index 를 0으로 되돌리고 노래 재생을 시작한다
+                // 정답과 틀리면, index 를 last_index 로 되돌리고 노래 재생을 시작한다
                 if (keypad_reg != answer_reg) begin
                     led_reg <= 0;
                     piezo_reg <= 0;
-                    answer_index <= 0;
+                    answer_index <= last_index;
                     music_replay <= 1;
 
                 // 마지막 index의 정답을 맞추었다면, last_index 값을 1 증가시키고
                 // 음정을 하나 추가하여 노래를 다시 재생한다
-                end else if ((keypad_reg == answer_reg) && (answer_index == last_index)) begin
+                end else if ((keypad_reg == answer_reg) && (answer_index == 0)) begin
 
                     // 게임 종료 max_index 인 7에 도달했다면, start flag 를 0으로 바꾸고,
                     // 게임 종료 신호를 보낸다
-                    if (answer_index == max_index) begin
+                    if (last_index == max_index) begin
                         game_start_flag <= 0;
                         game_end_reg <= 1;
                     end
 
-                    answer_index <= 0;
+                    answer_index <= last_index + 1;
                     last_index <= last_index + 1;
                     music_replay <= 1;
 
-                // 정답이 맞다면, answer_index 를 1 증가시키고 계속해서
+                // 정답이 맞다면, answer_index 를 1 감소시키고 계속해서
                 // 다음 음정을 맞추는 지 체크한다
                 end else if (keypad_reg == answer_reg) begin
-                    answer_index <= answer_index + 1;
+                    answer_index <= answer_index - 1;
                 end
             end
         end

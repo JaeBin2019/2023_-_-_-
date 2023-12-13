@@ -250,7 +250,7 @@ module game_module_3(
 
                     // 게임 종료 max_index 인 7에 도달했다면, start flag 를 0으로 바꾸고,
                     // 게임 종료 신호를 보낸다
-                    if (last_index == max_index + 1) begin
+                    if (last_index == max_index) begin
                         game_start_flag <= 0;
                         game_end_reg <= 1;
                     end
