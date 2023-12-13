@@ -140,42 +140,34 @@ module game_module_3(
                 0 : 
                 begin
                     piezo_reg <= register[2:0];
-                    led_reg <= register[2:0];
                 end
                 1 : 
                 begin
                     piezo_reg <= register[6:4];
-                    led_reg <= register[6:4];
                 end
                 2 : 
                 begin
                     piezo_reg <= register[10:8];
-                    led_reg <= register[10:8];
                 end
                 3 : 
                 begin
                     piezo_reg <= register[14:12];
-                    led_reg <= register[14:12];
                 end
                 4 : 
                 begin
                     piezo_reg <= register[18:16];
-                    led_reg <= register[18:16];
                 end
                 5 : 
                 begin
                     piezo_reg <= register[22:20];
-                    led_reg <= register[22:20];
                 end
                 6 : 
                 begin
                     piezo_reg <= register[26:24];
-                    led_reg <= register[26:24];
                 end
                 7 : 
                 begin
                     piezo_reg <= register[30:28];
-                    led_reg <= register[30:28];
                 end
                 endcase
                 click_counter <= 0;
@@ -258,7 +250,7 @@ module game_module_3(
 
                     // 게임 종료 max_index 인 7에 도달했다면, start flag 를 0으로 바꾸고,
                     // 게임 종료 신호를 보낸다
-                    if (answer_index == max_index) begin
+                    if (last_index == max_index + 1) begin
                         game_start_flag <= 0;
                         game_end_reg <= 1;
                     end
