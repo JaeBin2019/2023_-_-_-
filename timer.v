@@ -5,7 +5,7 @@ module timer (
     input clock,
     input reset,
     input miss,
-    output a, b, c, d, e, f, g, dp, game_fail_out,
+    output a, b, c, d, e, f, g, dp,
     output [7:0] an,
     output [20:0] timer_out,
     output game_over
