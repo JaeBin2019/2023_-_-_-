@@ -12,12 +12,11 @@ module random #(parameter a=1103515245, c=12345) (
     initial rand = 1; // I think this seed is good enough
     
     reg [31:0] next_rand;
-    reg change_answer_flag;
-    reg write_enable_reg;
+    reg change_answer_flag = 0;
+    reg write_enable_reg = 0;
     
     always @ (*) begin
-        next_rand = { (a * rand + c) % 8 + 1, (a * rand + c) % 8 + 1, (a * rand + c) % 8 + 1, (a * rand + c) % 8 + 1,
-              (a * rand + c) % 8 + 1, (a * rand + c) % 8 + 1, (a * rand + c) % 8 + 1, (a * rand + c) % 8 + 1 };
+        next_rand = (a * rand + c) % 8 + 1 >> 4 + (a * rand + c) % 8 + 1 >> 4 + (a * rand + c) % 8 + 1;
 
     end
     always @ (posedge clk or posedge change_answer) begin
