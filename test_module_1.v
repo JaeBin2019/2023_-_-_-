@@ -93,8 +93,8 @@ module game_module_1(
 
             // 정답 index 는 0 ~ last_index 까지 반복, last_index 초기값은 2로 설정
             answer_index <= 0;
-            last_index <= 2;
-            max_index <= 7;
+            last_index <= 0;
+            max_index <= 1;
         end else if (write_enable) begin
             register <= data_in;
             answer_saved_flag <= 1;
