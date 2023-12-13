@@ -30,9 +30,9 @@ module random (
     assign click = (ticker == 1) ? 1'b1 : 1'b0; 
     
     always @ (posedge clk or posedge change_answer) begin
-        next_rand = (click % 8 + 1) + ((7 * click) % 8 + 1) * 16 + ((13 * click) % 8 + 1) * 16 * 16 + ((23 * click) % 8 + 1) * 16 * 16 * 16
-            + ((17 * click) % 8 + 1) * 16 * 16 * 16 * 16 + ((31 * click) % 8 + 1) * 16 * 16 * 16 * 16 * 16 + ((37 * click) % 8 + 1) * 16 * 16 * 16 * 16 * 16 * 16
-            + ((43 * click) % 8 + 1) * 16 * 16 * 16 * 16 * 16 * 16 * 16;
+        next_rand = (seed % 8 + 1) + ((7 * seed) % 8 + 1) * 16 + ((13 * seed) % 8 + 1) * 16 * 16 + ((23 * seed) % 8 + 1) * 16 * 16 * 16
+            + ((17 * seed) % 8 + 1) * 16 * 16 * 16 * 16 + ((31 * seed) % 8 + 1) * 16 * 16 * 16 * 16 * 16 + ((37 * seed) % 8 + 1) * 16 * 16 * 16 * 16 * 16 * 16
+            + ((43 * seed) % 8 + 1) * 16 * 16 * 16 * 16 * 16 * 16 * 16;
         rand = next_rand;
         if (change_answer) begin
             change_answer_flag <= 1;
