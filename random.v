@@ -1,4 +1,4 @@
-`timescale 1ns / 1ps
+
 // lcg.v
 //  Linear Congruential Generator PRNG
 // Default parameters taken from glibc
@@ -15,6 +15,7 @@ module random (
     reg change_answer_flag = 0;
     reg write_enable_reg = 0;
     reg [20:0] ticker; // 23 bits needed to count up to 5M bits
+    reg [31:0] seed = 1;
     wire click;
 
     always @(posedge clk) begin
@@ -42,6 +43,8 @@ module random (
             
         end else if (write_enable_reg) begin
             write_enable_reg <= 0;
+        end else if (click) begin
+            seed <= seed + 1;
         end
     end
 
