@@ -1,14 +1,15 @@
 // https://simplefpga.blogspot.com/2012/07/to-code-stopwatch-in-verilog.html
 
 
-module timer(
+module timer (
     input clock,
     input reset,
     input miss,
     output a, b, c, d, e, f, g, dp, game_fail_out,
     output [7:0] an,
-    output [20:0] timer_out
-    );
+    output [20:0] timer_out,
+    output game_over
+  );
 
 reg [7:0] reg_d0, reg_d1, reg_d2, reg_d3, reg_d4, reg_d5, reg_d6, reg_d7; //registers that will hold the individual counts
 reg [20:0] ticker; //23 bits needed to count up to 5M bitsa
@@ -32,14 +33,14 @@ begin
 end
 
 assign click = ((ticker == 5000)?1'b1:1'b0); //click to be assigned high every 0.1 second
-reg game_fail;
+reg game_over_flag;
 
 always @ (posedge clock or posedge reset or posedge miss)
 begin
  if (reset)
   begin
    timer_flag <= 0;
-   game_fail <= 0;
+   game_over_flag <= 0;
    timer <= 1800000;
    reg_d0 <= 0;
    reg_d1 <= 0;
@@ -71,12 +72,13 @@ begin
     reg_d6 <= timer / 1000000 % 10;
     reg_d7 <= timer / 10000000 % 10;
    end else begin
-    game_fail <= 1;
+    timer <= 0;
+    game_over_flag <= 1;
    end
   end
 end
 
-assign game_fail_out = game_fail;
+assign game_over = game_over_flag;
 assign timer_out = timer;
 
 

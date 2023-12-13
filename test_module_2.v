@@ -1,4 +1,4 @@
-module game_module(
+module game_module_2(
     input wire clk,
     input wire reset,
     input wire [31:0] data_in,
@@ -14,6 +14,8 @@ module game_module(
 	output [3:0] auto_index_out,
     output [6:0] current_count_out,
     output change_answer,
+    output keypad_reg_out,
+    output keypad_enable_flag_out;
     output game_end
 );
 
@@ -57,8 +59,8 @@ module game_module(
         end else if (keypad_enable && answer_saved_flag) begin
             keypad_reg <= keypad_data;
             keypad_enable_flag <= 1;
-            led_reg <= keypad_reg;
-            piezo_reg <= keypad_reg;
+            led_reg <= keypad_data;
+            piezo_reg <= keypad_data;
         end
     end
 
@@ -100,6 +102,7 @@ module game_module(
                 game_end_reg <= 1;
             end
 
+            // 마지막 index 를 넘어서면,
             // answer 이 저장되지 않은 상태로 변경하고
             // random module 에 값을 요청하는 신호를 보내고
             // index 를 0으로 초기화 한다
@@ -179,6 +182,9 @@ module game_module(
         end
     end
 
+
+    assign keypad_enable_flag_out = keypad_enable_flag;
+    assign keypad_reg_out = keypad_reg;
     assign current_count_out = current_count;
     assign game_end = game_end_reg;
     assign music_replay_out = music_replay;
