@@ -1,7 +1,7 @@
-module button_module (
+module keypad_module (
     input clk,
     input reset,
-    input keypad_input,
+    input [3:0] keypad_input,
     input keypad_input_enable,
     output [3:0] keypad_out,
     output keypad_enable_out
@@ -10,7 +10,7 @@ module button_module (
     reg [3:0] keypad_reg;
     reg keypad_enable_out_reg;
 
-always @ (posedge clock or posedge reset or posedge keypad_input_enable)
+always @ (posedge clk or posedge reset or posedge keypad_input_enable)
 begin
     if(reset) begin
         keypad_reg <= 0;
@@ -28,7 +28,7 @@ begin
 
 end
 
-assign keypad_out = keypad_out_reg;
+assign keypad_out = keypad_reg;
 assign keypad_enable_out = keypad_enable_out_reg;
 
 endmodule
