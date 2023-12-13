@@ -16,14 +16,9 @@ module random #(parameter a=1103515245, c=12345) (
     reg write_enable_reg;
     
     always @ (*)
-        next_rand[3:0] = (a * rand + c) % 8 + 1;
-        next_rand[7:4] = (a * rand + c) % 8 + 1;
-        next_rand[11:8] = (a * rand + c) % 8 + 1;
-        next_rand[15:12] = (a * rand + c) % 8 + 1;
-        next_rand[19:16] = (a * rand + c) % 8 + 1;
-        next_rand[23:20] = (a * rand + c) % 8 + 1;
-        next_rand[27:24] = (a * rand + c) % 8 + 1;
-        next_rand[31:28] = (a * rand + c) % 8 + 1;
+        next_rand = { (a * rand + c) % 8 + 1, (a * rand + c) % 8 + 1, (a * rand + c) % 8 + 1, (a * rand + c) % 8 + 1,
+              (a * rand + c) % 8 + 1, (a * rand + c) % 8 + 1, (a * rand + c) % 8 + 1, (a * rand + c) % 8 + 1 };
+
     
     always @ (posedge clk or posedge change_answer)
         rand <= next_rand;
