@@ -20,6 +20,7 @@ module random #(parameter a=1103515245, c=12345) (
 
     end
     always @ (posedge clk or posedge change_answer) begin
+        rand = next_rand;
         if (change_answer) begin
             change_answer_flag <= 1;
 
@@ -33,5 +34,4 @@ module random #(parameter a=1103515245, c=12345) (
     end
 
     assign write_enable = write_enable_reg;
-    assign rand = next_rand;
 endmodule
