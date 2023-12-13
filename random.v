@@ -15,12 +15,12 @@ module random #(parameter a=1103515245, c=12345) (
     reg change_answer_flag;
     reg write_enable_reg;
     
-    always @ (*)
+    always @ (*) begin
         next_rand = { (a * rand + c) % 8 + 1, (a * rand + c) % 8 + 1, (a * rand + c) % 8 + 1, (a * rand + c) % 8 + 1,
               (a * rand + c) % 8 + 1, (a * rand + c) % 8 + 1, (a * rand + c) % 8 + 1, (a * rand + c) % 8 + 1 };
 
-    
-    always @ (posedge clk or posedge change_answer)
+    end
+    always @ (posedge clk or posedge change_answer) begin
         rand <= next_rand;
         if (change_answer) begin
             change_answer_flag <= 1;
@@ -32,4 +32,5 @@ module random #(parameter a=1103515245, c=12345) (
         end else if (write_enable_reg) begin
             write_enable_reg <= 0;
         end
+    end
 endmodule
