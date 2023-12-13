@@ -2,7 +2,7 @@
 // lcg.v
 //  Linear Congruential Generator PRNG
 // Default parameters taken from glibc
-module random #(parameter a=1103515245, c=12345) (
+module random (
     input clk,
     input change_answer,
     output reg [31:0] rand,
@@ -14,12 +14,13 @@ module random #(parameter a=1103515245, c=12345) (
     reg [31:0] next_rand;
     reg change_answer_flag = 0;
     reg write_enable_reg = 0;
+    reg [31:0] tick = 1;
     
-    always @ (*) begin
-        next_rand = (a * rand + c) % 8 + 1 >> 4 + (a * rand + c) % 8 + 1 >> 4 + (a * rand + c) % 8 + 1;
-
-    end
     always @ (posedge clk or posedge change_answer) begin
+        tick <= tick + 1;
+        next_rand = (tick % 8 + 1) + ((7 * tick) % 8 + 1) * 16 + ((13 * tick) % 8 + 1) * 16 * 16 + ((23 * tick) % 8 + 1) * 16 * 16 * 16
+            + ((17 * tick) % 8 + 1) * 16 * 16 * 16 * 16 + ((31 * tick) % 8 + 1) * 16 * 16 * 16 * 16 * 16 + ((37 * tick) % 8 + 1) * 16 * 16 * 16 * 16 * 16 * 16
+            + ((43 * tick) % 8 + 1) * 16 * 16 * 16 * 16 * 16 * 16 * 16;
         rand = next_rand;
         if (change_answer) begin
             change_answer_flag <= 1;
