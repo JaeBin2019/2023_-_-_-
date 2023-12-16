@@ -15,7 +15,7 @@ module game_module_2(
     output [6:0] current_count_out,
     output change_answer,
     output keypad_reg_out,
-    output keypad_enable_flag_out;
+    output keypad_enable_flag_out,
     output game_end
 );
 
@@ -187,14 +187,9 @@ module game_module_2(
     assign keypad_reg_out = keypad_reg;
     assign current_count_out = current_count;
     assign game_end = game_end_reg;
-    assign music_replay_out = music_replay;
-    assign register_out = register;
     assign click_counter_out = click_counter;
     assign led_out = led_reg;
     assign miss_out = miss_reg;
     assign piezo_out = piezo_reg;
-    assign data_out = data_reg;
-	assign last_index_out = last_index;
-	assign auto_index_out = auto_index;
 
 endmodule
