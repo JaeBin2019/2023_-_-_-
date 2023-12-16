@@ -4,7 +4,6 @@
 module timer (
     input clock,
     input reset,
-    input miss,
     output a, b, c, d, e, f, g, dp,
     output [7:0] an,
     output [20:0] timer_out,
@@ -14,7 +13,6 @@ module timer (
 reg [7:0] reg_d0, reg_d1, reg_d2, reg_d3, reg_d4, reg_d5, reg_d6, reg_d7; //registers that will hold the individual counts
 reg [20:0] ticker; //23 bits needed to count up to 5M bitsa
 reg [20:0] timer;
-reg timer_flag;
 wire click;
 
 //the mod 5M clock to generate a tick ever 0.1 second
@@ -39,7 +37,6 @@ always @ (posedge clock or posedge reset or posedge miss)
 begin
  if (reset)
   begin
-   timer_flag <= 0;
    game_over_flag <= 0;
    timer <= 1800000;
    reg_d0 <= 0;
@@ -51,17 +48,10 @@ begin
    reg_d6 <= 1;
    reg_d7 <= 0;
   end
- else if (miss) begin
-      timer_flag <= 1;
- end
   
  else if (click) 
   begin
    if (timer >= 0) begin
-    if (timer_flag) begin
-      timer <= timer - 10;
-      timer_flag <= 0;
-    end else begin
       timer <= timer - 1;
       reg_d0 <= timer / 100 % 10;
       reg_d1 <= timer / 1000 % 10;
@@ -71,7 +61,6 @@ begin
       reg_d5 <= 0;
       reg_d6 <= 0;
       reg_d7 <= 0;
-    end
    end else begin
     timer <= 0;
     game_over_flag <= 1;

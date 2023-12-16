@@ -93,8 +93,8 @@ module game_module_1(
 
             // 정답 index 는 0 ~ last_index 까지 반복, last_index 초기값은 2로 설정
             answer_index <= 0;
-            last_index <= 2;
-            max_index <= 7;
+            last_index <= 0;
+            max_index <= 1;
         end else if (write_enable) begin
             register <= data_in;
             answer_saved_flag <= 1;
@@ -138,43 +138,43 @@ module game_module_1(
                 case(auto_index)
                 0 : 
                 begin
-                    piezo_reg <= register[2:0];
-                    led_reg <= register[2:0];
+                    piezo_reg <= register[2:0] + 1;
+                    led_reg <= register[2:0] + 1;
                 end
                 1 : 
                 begin
-                    piezo_reg <= register[6:4];
-                    led_reg <= register[6:4];
+                    piezo_reg <= register[6:4] + 1;
+                    led_reg <= register[6:4] + 1;
                 end
                 2 : 
                 begin
-                    piezo_reg <= register[10:8];
-                    led_reg <= register[10:8];
+                    piezo_reg <= register[10:8] + 1;
+                    led_reg <= register[10:8] + 1;
                 end
                 3 : 
                 begin
-                    piezo_reg <= register[14:12];
-                    led_reg <= register[14:12];
+                    piezo_reg <= register[14:12] + 1;
+                    led_reg <= register[14:12] + 1;
                 end
                 4 : 
                 begin
-                    piezo_reg <= register[18:16];
-                    led_reg <= register[18:16];
+                    piezo_reg <= register[18:16] + 1;
+                    led_reg <= register[18:16] + 1;
                 end
                 5 : 
                 begin
-                    piezo_reg <= register[22:20];
-                    led_reg <= register[22:20];
+                    piezo_reg <= register[22:20] + 1;
+                    led_reg <= register[22:20] + 1;
                 end
                 6 : 
                 begin
-                    piezo_reg <= register[26:24];
-                    led_reg <= register[26:24];
+                    piezo_reg <= register[26:24] + 1;
+                    led_reg <= register[26:24] + 1;
                 end
                 7 : 
                 begin
-                    piezo_reg <= register[30:28];
-                    led_reg <= register[30:28];
+                    piezo_reg <= register[30:28] + 1;
+                    led_reg <= register[30:28] + 1;
                 end
                 endcase
                 click_counter <= 0;
@@ -210,35 +210,35 @@ module game_module_1(
                 case(answer_index)
                 0 : 
                 begin
-                    answer_reg <= register[2:0];
+                    answer_reg <= register[2:0] + 1;
                 end
                 1 : 
                 begin
-                    answer_reg <= register[6:4];
+                    answer_reg <= register[6:4] + 1;
                 end
                 2 : 
                 begin
-                    answer_reg <= register[10:8];
+                    answer_reg <= register[10:8] + 1;
                 end
                 3 : 
                 begin
-                    answer_reg <= register[14:12];
+                    answer_reg <= register[14:12] + 1;
                 end
                 4 : 
                 begin
-                    answer_reg <= register[18:16];
+                    answer_reg <= register[18:16] + 1; 
                 end
                 5 : 
                 begin
-                    answer_reg <= register[22:20];
+                    answer_reg <= register[22:20] + 1;
                 end
                 6 : 
                 begin
-                    answer_reg <= register[26:24];
+                    answer_reg <= register[26:24] + 1;
                 end
                 7 : 
                 begin
-                    answer_reg <= register[30:28];
+                    answer_reg <= register[30:28] + 1;
                 end
                 endcase
             end else if (answer_flag) begin

@@ -139,35 +139,35 @@ module game_module_3(
                 case(auto_index)
                 0 : 
                 begin
-                    piezo_reg <= register[2:0];
+                    piezo_reg <= register[2:0] + 1;
                 end
                 1 : 
                 begin
-                    piezo_reg <= register[6:4];
+                    piezo_reg <= register[6:4] + 1;
                 end
                 2 : 
                 begin
-                    piezo_reg <= register[10:8];
+                    piezo_reg <= register[10:8] + 1;
                 end
                 3 : 
                 begin
-                    piezo_reg <= register[14:12];
+                    piezo_reg <= register[14:12] + 1;
                 end
                 4 : 
                 begin
-                    piezo_reg <= register[18:16];
+                    piezo_reg <= register[18:16] + 1;
                 end
                 5 : 
                 begin
-                    piezo_reg <= register[22:20];
+                    piezo_reg <= register[22:20] + 1;
                 end
                 6 : 
                 begin
-                    piezo_reg <= register[26:24];
+                    piezo_reg <= register[26:24] + 1;
                 end
                 7 : 
                 begin
-                    piezo_reg <= register[30:28];
+                    piezo_reg <= register[30:28] + 1;
                 end
                 endcase
                 click_counter <= 0;
@@ -203,35 +203,35 @@ module game_module_3(
                 case(answer_index)
                 0 : 
                 begin
-                    answer_reg <= register[2:0];
+                    answer_reg <= register[2:0] + 1;
                 end
                 1 : 
                 begin
-                    answer_reg <= register[6:4];
+                    answer_reg <= register[6:4] + 1;
                 end
                 2 : 
                 begin
-                    answer_reg <= register[10:8];
+                    answer_reg <= register[10:8] + 1;
                 end
                 3 : 
                 begin
-                    answer_reg <= register[14:12];
+                    answer_reg <= register[14:12] + 1;
                 end
                 4 : 
                 begin
-                    answer_reg <= register[18:16];
+                    answer_reg <= register[18:16] + 1;
                 end
                 5 : 
                 begin
-                    answer_reg <= register[22:20];
+                    answer_reg <= register[22:20] + 1;
                 end
                 6 : 
                 begin
-                    answer_reg <= register[26:24];
+                    answer_reg <= register[26:24] + 1;
                 end
                 7 : 
                 begin
-                    answer_reg <= register[30:28];
+                    answer_reg <= register[30:28] + 1;
                 end
                 endcase
             end else if (answer_flag) begin
