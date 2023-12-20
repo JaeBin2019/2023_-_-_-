@@ -8,7 +8,6 @@ module game_module_3(
     input wire game_start,
     output [3:0] piezo_out,
     output [3:0] led_out,
-    output miss_out,
     output game_end
 );
 
@@ -37,7 +36,6 @@ module game_module_3(
     reg [3:0] data_reg;
     reg [3:0] answer_index;     // 정답 index
     reg music_replay;
-    reg miss_reg;
     reg [3:0] keypad_reg;
     reg [3:0] answer_reg;
     reg [3:0] led_reg;
@@ -66,7 +64,6 @@ module game_module_3(
             click_counter <= 0;
             auto_index <= 0;
             music_replay <= 1;
-            miss_reg <= 0;
             problem_count <= 0;
             answer_saved_flag <= 0;
             stop_music_flag <= 0;
@@ -266,7 +263,6 @@ module game_module_3(
 
     assign piezo_out = piezo_reg;
     assign led_out = led_reg;
-    assign miss_out = miss_reg;
     assign game_end = game_end_reg;
 
 endmodule
