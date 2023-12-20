@@ -12,13 +12,13 @@ module game_module_3(
     output game_end
 );
 
-    reg [20:0] ticker; // 23 bits needed to count up to 5M bits
+    reg [22:0] ticker; // 23 bits needed to count up to 5M bits
     wire click;
 
     always @(posedge clk or posedge reset) begin
         if (reset) begin
             ticker <= 0;
-        end else if (ticker == 50000000) begin
+        end else if (ticker == 5000000) begin
             ticker <= 0;
         end else begin
             ticker <= ticker + 1;
@@ -26,7 +26,7 @@ module game_module_3(
     end
 
 
-    assign click = (ticker == 50000000) ? 1'b1 : 1'b0; 
+    assign click = (ticker == 5000000) ? 1'b1 : 1'b0; 
     reg [31:0] register;
     reg [3:0] last_index;    // 각 음정의 last index : 2 ~ 7
     reg [3:0] max_index;    // 노래 재생 시 마지막 index : 7
@@ -84,6 +84,7 @@ module game_module_3(
             answer_index <= 0;
             last_index <= 2;
             max_index <= 7;
+        
         end else if (write_enable) begin
             register <= data_in;
             answer_saved_flag <= 1;
