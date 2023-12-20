@@ -66,10 +66,13 @@ module play_music_module (
         end else if (success) begin
             success_flag <= 1;
             is_music_playing <= 1;
+            click_counter <= 3;
 
         end else if (fail) begin
             fail_flag <= 1;
             is_music_playing <= 1;
+            click_counter <= 3;
+
 
         end else if ((click_counter == 3) && is_music_playing) begin
             if (success_flag) begin
