@@ -33,8 +33,8 @@ module play_music_module (
         }
     */
 
-    reg [3:0] last_index;    // 각 음정의 last index : 2 ~ 7
-    reg [3:0] auto_index;       // 노래 자동 재생 index
+    reg [10:0] last_index;    // 각 음정의 last index : 2 ~ 7
+    reg [10:0] auto_index;       // 노래 자동 재생 index
     reg [2:0] click_counter;
     reg is_music_playing;
     reg [3:0] piezo_reg;
@@ -52,7 +52,7 @@ module play_music_module (
 
             // 정답 index 는 0 ~ last_index 까지 반복, last_index 초기값은 2로 설정
             auto_index <= 0;
-            last_index <= 2;
+            last_index <= 26;
 
             is_music_playing <= 0;
             
@@ -92,25 +92,266 @@ module play_music_module (
                         piezo_reg <= 3;
                         led_reg <= 3;
                     end
+                    3 : 
+                    begin
+                        piezo_reg <= 4;
+                        led_reg <= 4;
+                    end
+                    4 : 
+                    begin
+                        piezo_reg <= 5;
+                        led_reg <= 5;
+                    end
+                    5 : 
+                    begin
+                        piezo_reg <= 4;
+                        led_reg <= 4;
+                    end
+                    6 : 
+                    begin
+                        piezo_reg <= 3;
+                        led_reg <= 3;
+                    end
+                    7 : 
+                    begin
+                        piezo_reg <= 2;
+                        led_reg <= 2;
+                    end
+                    8 : 
+                    begin
+                        piezo_reg <= 1;
+                        led_reg <= 1;
+                    end
+                    9 : 
+                    begin
+                        piezo_reg <= 1;
+                        led_reg <= 1;
+                    end
+                    10 : 
+                    begin
+                        piezo_reg <= 5;
+                        led_reg <= 5;
+                    end
+                    11 : 
+                    begin
+                        piezo_reg <= 5;
+                        led_reg <= 5;
+                    end
+                    12 : 
+                    begin
+                        piezo_reg <= 8;
+                        led_reg <= 8;
+                    end
+                    13 : 
+                    begin
+                        piezo_reg <= 0;
+                        led_reg <= 0;
+                    end
+                    14 : 
+                    begin
+                        piezo_reg <= 1;
+                        led_reg <= 1;
+                    end
+                    15 : 
+                    begin
+                        piezo_reg <= 2;
+                        led_reg <= 2;
+                    end
+                    16 : 
+                    begin
+                        piezo_reg <= 3;
+                        led_reg <= 3;
+                    end
+                    17 : 
+                    begin
+                        piezo_reg <= 4;
+                        led_reg <= 4;
+                    end
+                    18 : 
+                    begin
+                        piezo_reg <= 5;
+                        led_reg <= 5;
+                    end
+                    19 : 
+                    begin
+                        piezo_reg <= 4;
+                        led_reg <= 4;
+                    end
+                    20 : 
+                    begin
+                        piezo_reg <= 3;
+                        led_reg <= 3;
+                    end
+                    21 : 
+                    begin
+                        piezo_reg <= 2;
+                        led_reg <= 2;
+                    end
+                    22 : 
+                    begin
+                        piezo_reg <= 1;
+                        led_reg <= 1;
+                    end
+                    23 : 
+                    begin
+                        piezo_reg <= 1;
+                        led_reg <= 1;
+                    end
+                    24 : 
+                    begin
+                        piezo_reg <= 5;
+                        led_reg <= 5;
+                    end
+                    25 : 
+                    begin
+                        piezo_reg <= 5;
+                        led_reg <= 5;
+                    end
+                    26 : 
+                    begin
+                        piezo_reg <= 8;
+                        led_reg <= 8;
+                    end
                 endcase
 
             end if (fail_flag) begin
                 case(auto_index)
                     0 : 
                     begin
-                        piezo_reg <= 4;
-                        led_reg <= 4;
+                        piezo_reg <= 6;
+                        led_reg <= 6;
                     end
                     1 : 
+                    begin
+                        piezo_reg <= 5;
+                        led_reg <= 5;
+                    end
+                    2 : 
+                    begin
+                        piezo_reg <= 6;
+                        led_reg <= 6;
+                    end
+                    3 : 
+                    begin
+                        piezo_reg <= 6;
+                        led_reg <= 6;
+                    end
+                    4 : 
+                    begin
+                        piezo_reg <= 5;
+                        led_reg <= 5;
+                    end
+                    5 : 
+                    begin
+                        piezo_reg <= 0;
+                        led_reg <= 0;
+                    end
+                    6 : 
                     begin
                         piezo_reg <= 3;
                         led_reg <= 3;
                     end
-                    2 : 
+                    7 : 
                     begin
                         piezo_reg <= 2;
                         led_reg <= 2;
                     end
+                    8 : 
+                    begin
+                        piezo_reg <= 3;
+                        led_reg <= 3;
+                    end
+                    9 : 
+                    begin
+                        piezo_reg <= 3;
+                        led_reg <= 3;
+                    end
+                    10 : 
+                    begin
+                        piezo_reg <= 2;
+                        led_reg <= 2;
+                    end
+                    11 : 
+                    begin
+                        piezo_reg <= 0;
+                        led_reg <= 0;
+                    end
+                    12 : 
+                    begin
+                        piezo_reg <= 6;
+                        led_reg <= 6;
+                    end
+                    13 : 
+                    begin
+                        piezo_reg <= 5;
+                        led_reg <= 5;
+                    end
+                    14 : 
+                    begin
+                        piezo_reg <= 6;
+                        led_reg <= 6;
+                    end
+                    15 : 
+                    begin
+                        piezo_reg <= 6;
+                        led_reg <= 6;
+                    end
+                    16 : 
+                    begin
+                        piezo_reg <= 5;
+                        led_reg <= 5;
+                    end
+                    17 : 
+                    begin
+                        piezo_reg <= 0;
+                        led_reg <= 0;
+                    end
+                    18 : 
+                    begin
+                        piezo_reg <= 3;
+                        led_reg <= 3;
+                    end
+                    19 : 
+                    begin
+                        piezo_reg <= 2;
+                        led_reg <= 2;
+                    end
+                    20 : 
+                    begin
+                        piezo_reg <= 3;
+                        led_reg <= 3;
+                    end
+                    21 : 
+                    begin
+                        piezo_reg <= 3;
+                        led_reg <= 3;
+                    end
+                    22 : 
+                    begin
+                        piezo_reg <= 2;
+                        led_reg <= 2;
+                    end
+                    23 : 
+                    begin
+                        piezo_reg <= 0;
+                        led_reg <= 0;
+                    end
+                    24 : 
+                    begin
+                        piezo_reg <= 0;
+                        led_reg <= 0;
+                    end
+                    25 : 
+                    begin
+                        piezo_reg <= 0;
+                        led_reg <= 0;
+                    end
+                    26 : 
+                    begin
+                        piezo_reg <= 0;
+                        led_reg <= 0;
+                    end
+                    
                 endcase
             end
 
