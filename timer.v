@@ -34,25 +34,24 @@ end
 assign click = ((ticker == 5000)?1'b1:1'b0); //click to be assigned high every 0.1 second
 reg game_over_flag;
 
-always @ (posedge clock or posedge reset or posedge start)
-begin
- if (reset) begin
-   start_flag <= 0;
-   game_over_flag <= 0;
-   timer <= 1800000;
-   reg_d0 <= 0;
-   reg_d1 <= 0;
-   reg_d2 <= 0;
-   reg_d3 <= 0;
-   reg_d4 <= 0;
-   reg_d5 <= 8;
-   reg_d6 <= 1;
-   reg_d7 <= 0;
-end else if (start)
-  start_flag <= 1;
+always @ (posedge clock or posedge reset or posedge start) begin
+  if (reset) begin
+    start_flag <= 0;
+    game_over_flag <= 0;
+    timer <= 1800000;
+    reg_d0 <= 0;
+    reg_d1 <= 0;
+    reg_d2 <= 0;
+    reg_d3 <= 0;
+    reg_d4 <= 0;
+    reg_d5 <= 8;
+    reg_d6 <= 1;
+    reg_d7 <= 0;
+  end else if (start) begin
+    start_flag <= 1;
 
-end else if (click && start_flag) begin
-   if (timer >= 0) begin
+  end else if (click && start_flag) begin
+    if (timer >= 0) begin
       timer <= timer - 1;
       reg_d0 <= timer / 100 % 10;
       reg_d1 <= timer / 1000 % 10;
@@ -62,10 +61,11 @@ end else if (click && start_flag) begin
       reg_d5 <= 0;
       reg_d6 <= 0;
       reg_d7 <= 0;
-   end else begin
-    timer <= 0;
-    game_over_flag <= 1;
-   end
+    end else begin
+      timer <= 0;
+      game_over_flag <= 1;
+    end
+  end
 end
 
 

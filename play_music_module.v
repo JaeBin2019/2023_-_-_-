@@ -140,5 +140,8 @@ module play_music_module (
         end
     end
 
+    assign piezo_out = piezo_reg;
+    assign led_out = led_reg;
+
 
 endmodule
