@@ -32,7 +32,7 @@ end
 assign click = ((ticker == 5000)?1'b1:1'b0); //click to be assigned high every 0.1 second
 reg game_over_flag;
 
-always @ (posedge clock or posedge reset or posedge miss)
+always @ (posedge clock or posedge reset)
 begin
  if (reset)
   begin
