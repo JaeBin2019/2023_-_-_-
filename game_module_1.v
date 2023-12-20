@@ -263,7 +263,6 @@ module game_module_1(
         end
     end
 
-    assign answer_flag_out = answer_flag;
     assign piezo_out = piezo_reg;
     assign led_out = led_reg;
     assign miss_out = miss_reg;
