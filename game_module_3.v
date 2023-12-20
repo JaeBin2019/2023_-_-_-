@@ -49,6 +49,7 @@ module game_module_3(
     reg game_end_reg;
     reg keypad_down_flag;
     reg answer_flag;
+    reg delay_flag;
 
     /*
         auto index 와 max index 가 같으면, 음악 재생을 멈추고 index를 0으로 바꾼다
@@ -75,6 +76,7 @@ module game_module_3(
             keypad_down_flag <= 0;
             keypad_reg <= 0;
             answer_flag <= 0;
+            delay_flag <= 0;
 
             piezo_reg <= 0;
             led_reg <= 0;
@@ -111,11 +113,15 @@ module game_module_3(
 
         // game start 신호와 register 에 정답이 저장된 이후에 동작
         end else if (game_start_flag && answer_saved_flag) begin
-
+            if (delay_flag) begin
+                if (click) begin
+                    delay_flag <= 0;
+                end
+            end
             // reset 시 music replay 가 1로 설정되어 자동으로 노래가 재생되고,
             // 이후에는 miss 가 발생하거나, last index 까지 모든 답을 맞춘 뒤에
             // music_replay 가 1로 설정되어 노래를 재생한다.
-            if (music_replay) begin
+            else if (music_replay) begin
                 auto_index <= 0;
                 click_counter <= 3;
                 is_music_playing <= 1;
@@ -247,6 +253,7 @@ module game_module_3(
                     answer_index <= last_index + 1;
                     last_index <= last_index + 1;
                     music_replay <= 1;
+                    delay_flag <= 1;
 
                 // 정답이 맞다면, answer_index 를 1 감소시키고 계속해서
                 // 다음 음정을 맞추는 지 체크한다
