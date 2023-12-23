@@ -4,14 +4,18 @@
 module timer (
     input clock,
     input reset,
+    input start,
+    input miss,
     output a, b, c, d, e, f, g, dp,
     output [7:0] an,
     output game_over
   );
 
 reg [7:0] reg_d0, reg_d1, reg_d2, reg_d3, reg_d4, reg_d5, reg_d6, reg_d7; //registers that will hold the individual counts
-reg [20:0] ticker; //23 bits needed to count up to 5M bitsa
-reg [20:0] timer;
+reg [22:0] ticker; //23 bits needed to count up to 5M bitsa
+reg [22:0] timer;
+reg miss_flag;
+reg start_flag;
 wire click;
 
 //the mod 5M clock to generate a tick ever 0.1 second
@@ -32,38 +36,49 @@ end
 assign click = ((ticker == 5000)?1'b1:1'b0); //click to be assigned high every 0.1 second
 reg game_over_flag;
 
-always @ (posedge clock or posedge reset)
-begin
- if (reset)
-  begin
-   game_over_flag <= 0;
-   timer <= 1800000;
-   reg_d0 <= 0;
-   reg_d1 <= 0;
-   reg_d2 <= 0;
-   reg_d3 <= 0;
-   reg_d4 <= 0;
-   reg_d5 <= 8;
-   reg_d6 <= 1;
-   reg_d7 <= 0;
+always @ (posedge clock or posedge reset) begin
+  if (reset) begin
+    game_over_flag <= 0;
+    timer <= 1800000;
+    start_flag <= 0;
+    miss_flag <= 0;
+    reg_d0 <= 0;
+    reg_d1 <= 0;
+    reg_d2 <= 0;
+    reg_d3 <= 0;
+    reg_d4 <= 0;
+    reg_d5 <= 8;
+    reg_d6 <= 1;
+    reg_d7 <= 0;
   end
-  
- else if (click) 
-  begin
-   if (timer > 1) begin
-      timer <= timer - 1;
-      reg_d0 <= timer / 100 % 10;
-      reg_d1 <= timer / 1000 % 10;
-      reg_d2 <= timer / 10000 % 10;
-      reg_d3 <= timer / 100000 % 10;
-      reg_d4 <= timer / 1000000 % 10;
-      reg_d5 <= 0;
-      reg_d6 <= 0;
-      reg_d7 <= 0;
-   end else begin
-    timer <= 0;
-    game_over_flag <= 1;
-   end
+
+  else if (start) begin
+    start_flag <= 1;
+  end
+  if (start_flag) begin
+    if (miss) begin
+      if (timer < 11) begin
+        timer <= 0;
+        game_over_flag <= 1;
+      end else begin
+        timer <= timer - 10;
+      end
+    end else if (click) begin
+      if (timer > 1) begin
+        timer <= timer - 1;
+        reg_d0 <= timer / 100 % 10;
+        reg_d1 <= timer / 1000 % 10;
+        reg_d2 <= timer / 10000 % 10;
+        reg_d3 <= timer / 100000 % 10;
+        reg_d4 <= timer / 1000000 % 10;
+        reg_d5 <= 0;
+        reg_d6 <= 0;
+        reg_d7 <= 0;
+      end else begin
+        timer <= 0;
+        game_over_flag <= 1;
+      end
+    end
   end
 end
 
@@ -108,7 +123,7 @@ always @ (*)
     begin
      sseg = reg_d2;
      an_temp = 8'b11111011;
-     reg_dp = 1'b0;
+     reg_dp = 1'b1;
     end
     
    3'b011:
@@ -122,7 +137,7 @@ always @ (*)
     begin
      sseg = reg_d4;
      an_temp = 8'b11101111;
-     reg_dp = 1'b1;
+     reg_dp = 1'b0;
     end
    
    3'b101:
