@@ -50,33 +50,36 @@ always @ (posedge clock or posedge reset) begin
     reg_d5 <= 8;
     reg_d6 <= 1;
     reg_d7 <= 0;
-  end
-
-  else if (start) begin
-    start_flag <= 1;
-  end
-  if (start_flag) begin
-    if (miss) begin
-      if (timer < 11) begin
-        timer <= 0;
-        game_over_flag <= 1;
-      end else begin
-        timer <= timer - 10;
-      end
-    end else if (click) begin
-      if (timer > 1) begin
-        timer <= timer - 1;
-        reg_d0 <= timer / 100 % 10;
-        reg_d1 <= timer / 1000 % 10;
-        reg_d2 <= timer / 10000 % 10;
-        reg_d3 <= timer / 100000 % 10;
-        reg_d4 <= timer / 1000000 % 10;
-        reg_d5 <= 0;
-        reg_d6 <= 0;
-        reg_d7 <= 0;
-      end else begin
-        timer <= 0;
-        game_over_flag <= 1;
+  end else begin
+    if (game_over_flag) begin
+      timer <= 0;
+      
+    end if (start) begin
+      start_flag <= 1;
+    end
+    if (start_flag) begin
+      if (miss) begin
+        if (timer < 11) begin
+          timer <= 0;
+          game_over_flag <= 1;
+        end else begin
+          timer <= timer - 10;
+        end
+      end else if (click) begin
+        if (timer > 1) begin
+          timer <= timer - 1;
+          reg_d0 <= timer / 100 % 10;
+          reg_d1 <= timer / 1000 % 10;
+          reg_d2 <= timer / 10000 % 10;
+          reg_d3 <= timer / 100000 % 10;
+          reg_d4 <= timer / 1000000 % 10;
+          reg_d5 <= 0;
+          reg_d6 <= 0;
+          reg_d7 <= 0;
+        end else begin
+          timer <= 0;
+          game_over_flag <= 1;
+        end
       end
     end
   end
