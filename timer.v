@@ -52,8 +52,8 @@ always @ (posedge clock or posedge reset) begin
     reg_d7 <= 0;
   end else begin
     if (game_over_flag) begin
-      timer <= 0;
-      
+      start_flag <= 0;
+
     end if (start) begin
       start_flag <= 1;
     end
