@@ -65,7 +65,7 @@ always @ (posedge clock or posedge reset) begin
     end
     if (start_flag) begin
       if (miss) begin
-        if (timer < 11) begin
+        if (timer < 55000) begin
           timer <= 0;
           game_over_flag <= 1;
         end else begin
