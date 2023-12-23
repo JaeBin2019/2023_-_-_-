@@ -45,10 +45,10 @@ always @ (posedge clock or posedge reset) begin
     reg_d0 <= 0;
     reg_d1 <= 0;
     reg_d2 <= 0;
-    reg_d3 <= 0;
-    reg_d4 <= 0;
-    reg_d5 <= 8;
-    reg_d6 <= 1;
+    reg_d3 <= 8;
+    reg_d4 <= 1;
+    reg_d5 <= 0;
+    reg_d6 <= 0;
     reg_d7 <= 0;
   end else begin
     if (game_over_flag) begin
@@ -63,7 +63,7 @@ always @ (posedge clock or posedge reset) begin
           timer <= 0;
           game_over_flag <= 1;
         end else begin
-          timer <= timer - 10;
+          timer <= timer - 50000;
         end
       end else if (click) begin
         if (timer > 1) begin
