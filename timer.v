@@ -50,7 +50,7 @@ begin
   
  else if (click) 
   begin
-   if (timer >= 0) begin
+   if (timer > 1) begin
       timer <= timer - 1;
       reg_d0 <= timer / 100 % 10;
       reg_d1 <= timer / 1000 % 10;
