@@ -6,6 +6,7 @@ module timer (
     input reset,
     input start,
     input miss,
+    input game_end,
     output a, b, c, d, e, f, g, dp,
     output [7:0] an,
     output game_over
@@ -16,6 +17,7 @@ reg [22:0] ticker; //23 bits needed to count up to 5M bitsa
 reg [22:0] timer;
 reg miss_flag;
 reg start_flag;
+reg game_end_reg;
 wire click;
 
 //the mod 5M clock to generate a tick ever 0.1 second
@@ -42,6 +44,7 @@ always @ (posedge clock or posedge reset) begin
     timer <= 1800000;
     start_flag <= 0;
     miss_flag <= 0;
+    game_end_reg <= 0;
     reg_d0 <= 0;
     reg_d1 <= 0;
     reg_d2 <= 0;
@@ -51,7 +54,10 @@ always @ (posedge clock or posedge reset) begin
     reg_d6 <= 0;
     reg_d7 <= 0;
   end else begin
-    if (game_over_flag) begin
+    if (game_end) begin
+      game_end_reg <= 1;
+
+    end if (game_end_reg) begin
       start_flag <= 0;
 
     end if (start) begin
