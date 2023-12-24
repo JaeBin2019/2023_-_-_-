@@ -1,4 +1,4 @@
-module play_music_module (
+module play_ending_music_module (
     input wire clk,
     input wire reset,
     input wire success,
