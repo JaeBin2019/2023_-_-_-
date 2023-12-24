@@ -56,7 +56,7 @@ module game_module_1(
             is_music_playing <= 0;
         }
     */
-
+    
     always @(posedge clk or posedge reset or posedge write_enable or posedge keypad_enable or posedge game_start) begin
 
         if (reset) begin

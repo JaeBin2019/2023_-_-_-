@@ -1,4 +1,4 @@
-module game_module_3(
+module game_module_2(
     input wire clk,
     input wire reset,
     input wire [3:0] keypad_input,
