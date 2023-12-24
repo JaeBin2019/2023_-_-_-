@@ -60,9 +60,8 @@ module play_ending_music_module (
             success_flag <= 0;
             fail_flag <= 0;
             
-            // reset 시 music replay 가 1로 설정되어 자동으로 노래가 재생되고,
-            // 이후에는 miss 가 발생하거나, last index 까지 모든 답을 맞춘 뒤에
-            // music_replay 가 1로 설정되어 노래를 재생한다.
+  
+        // Success 또는 Fail 시 flag 가 설정되어, 각 경우에 따른 노래가 재생된다.
         end else if (success) begin
             success_flag <= 1;
             is_music_playing <= 1;
